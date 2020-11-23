@@ -1,12 +1,11 @@
 <!-- badges: start -->
 [![R build status](https://github.com/lsteinmann/clayringsmiletus/workflows/R-CMD-check/badge.svg)](https://github.com/lsteinmann/clayringsmiletus/actions)
-[![Travis build status](https://travis-ci.com/lsteinmann/clayringsmiletus.svg?branch=master)](https://travis-ci.com/lsteinmann/clayringsmiletus)
 <!-- badges: end -->
 
 
 # Stacking Rings from Miletus
 
-This repository provides all the data used in [L. Steinmann, Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus, Archäologischer Anzeiger 2020/1, 2020](https://doi.org/10.34780/aa.v0i1.1014). The rmd-document (Supplement.Rmd) contains the code used to generate most of the graphs and findings as seen in the paper. This repository is not intended as an explanation of methodology or the archaeological finds itself -- as this is already provided in the paper itself -- but as additional transparency and a way of making the data available. For further information, see the paper:
+This repository provides all the data used in [L. Steinmann, Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus, Archäologischer Anzeiger 2020/1, 2020](https://doi.org/10.34780/aa.v0i1.1014). The vignette (vignettes/supplement.Rmd) contains the code used to generate most of the graphs and findings as seen in the paper. This repository is not intended as an explanation of methodology or the archaeological finds itself -- as this is already provided in the paper itself -- but as additional transparency and a way of making the data available. For further information, see the paper:
 
 ## Publication
 
