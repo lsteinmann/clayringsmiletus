@@ -17,7 +17,7 @@
 #'   \item width: Numeric. Surface width of the clay ring in cm (distance between min_DM and max_DM depending on angle)
 #'   \item thickness: Numeric. Thickness of the clay in cm (taken at the most representative spot)
 #'   \item shape: Factor. Overall shape of the ring body in profile
-#'   \item fragments: Integer. Number of fragments assigned to this ring
+#'   \item fragments: Numeric. Number of fragments assigned to this ring
 #' }
 #'
 #'

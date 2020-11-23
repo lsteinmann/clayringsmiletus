@@ -20,18 +20,19 @@ Archäologischer Anzeiger 2020/1" (https://doi.org/10.34780/aa.v0i1.1014).
 }
 \details{
 \itemize{
-  \item Inv: Inventory Number in Miletus. If NA not inventoried.
-  \item clay: Color of the clay (Names as used in the Munsell Soil Color Chart)
-  \item applications: Type of applications
-  \item color_appl: Color of applications (Names as used in the Munsell Soil Color Chart)
-  \item markings: Markings on the surfaces
-  \item height: Height of the ring body in cm
-  \item min_DM: Minimum (inner) diameter in cm
-  \item max_DM: Maximum (outer) diameter in cm
-  \item width: Surface width of the clay ring in cm (distance between min_DM and max_DM depending on angle)
-  \item thickness: Thickness of the clay in cm (taken at the most representative spot)
-  \item shape: Overall shape of the ring body in profile
-  \item fragments: Number of fragments assigned to this ring
+  \item Inv: Factor. Inventory Number in Miletus. If NA not inventoried.
+  \item clay: Factor. Color of the clay (Names as used in the Munsell Soil Color Chart)
+  \item applications: Factor. Type of applications
+  \item color_appl: Factor. Color of applications (Names as used in the Munsell Soil Color Chart)
+  \item markings: Integer. Markings on the surfaces, 0 = absence, 1 = presence.
+  \item markings_type: Character. Markings on the surfaces
+  \item height: Numeric. Height of the ring body in cm
+  \item min_DM: Numeric. Minimum (inner) diameter in cm
+  \item max_DM: Numeric. Maximum (outer) diameter in cm
+  \item width: Numeric. Surface width of the clay ring in cm (distance between min_DM and max_DM depending on angle)
+  \item thickness: Numeric. Thickness of the clay in cm (taken at the most representative spot)
+  \item shape: Factor. Overall shape of the ring body in profile
+  \item fragments: Integer. Number of fragments assigned to this ring
 }
 }
 \keyword{datasets}
