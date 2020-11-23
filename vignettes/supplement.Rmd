@@ -1,0 +1,305 @@
+---
+title: "supplement"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{supplement}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+knitr::opts_chunk$set(warning = FALSE, echo = TRUE, fig.width = 12)
+custom_palette <- c("#8dae25", "#17365c")
+custom_palette <- colorRampPalette(custom_palette, bias = 1, interpolate = "linear")
+
+library(knitr)
+library(kableExtra)
+```
+
+This document is intended as a supplement to the paper [**Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus, Archäologischer Anzeiger 2020/1**](https://publications.dainst.org/journals/index.php/aa/article/view/2619) [@steinmann_clay_rings_2020]. 
+
+> *Abstract*: During its excavation in the 1970s, a large number of unidentifiable objects were found in the sanctuary of Dionysos in Miletus: »Peculiar and as of now not explicable for the editor [Willi Real] are numerous fragments of flat rings […]. They are reminiscent of the rings used for modern coal stoves. […] Hitherto no interpretation has been found.« [@real_milet_1977 105]. In the course of a re-examination of the excavation’s findings since 2017, it has been possible to find similar rings from different places in the Mediterranean. It is plausible that these until now unidentified objects are stacking rings used in potters workshops, an isolated and unique find for 5th century Miletus. In this article, the rings will be compared and classified, followed by an assessment of their functionality as well as a discussion of their context. (Preliminary reports of the excavation: @muller-wiener_milet_1977 and @muller-wiener_milet_1979)
+
+The github repository provides all the data used in said paper. This document contains all the code used to generate the relevant graphs and findings in the paper mentioned. It is not intended as an explanation of methodology -- as this is already provided in the paper itself -- but as additional transparency.
+
+
+## The Data
+
+The table provided in the publication [@steinmann_clay_rings_2020 fig. 16] is available as a .csv-file (in the "data-raw" subdirectory) as well as a Data set that is provided in this package:
+
+
+```{r setup}
+library(clayringsmiletus)
+data("StackR_Miletus")
+```
+
+All measurements were gathered by the author during a research stay in Miletus in 2017, funded by the Research School of the Ruhr-University in Bochum. Subsequent work was accomplished during a stipend of the [Gerda Henkel Foundation](https://www.gerda-henkel-stiftung.de/) I received for my PhD project "The Sanctuary of Dionysos in the Sacral Landscape of Miletus" at the Ruhr-University Bochum and since 2020 at the University of Hamburg. The table included the following data (sample of inventoried rings):
+
+```{r display_table_1, echo = FALSE}
+library(tidyverse)
+StackR_Miletus %>%
+  filter(!is.na(Inv)) %>% arrange(Inv) %>%
+  kable("html") %>%
+  kable_styling(font_size = 9, full_width = FALSE, position = "left", 
+                bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## Classification of the Milesian Clay Rings
+
+The first step in the paper is to look at the distribution of measurements with a density graph of the numeric variables. Thickness and Height are multiplied by 10 to make the outcome more visible. All measurements are originally in cm.
+
+```{r density_prep, echo = TRUE, message= FALSE, fig.height=3}
+library(reshape2)
+library(ggridges)
+
+StackR_Miletus %>%
+  transmute("thickness*10" = thickness*10, 
+            "height*10" = height*10,
+            width, min_DM, max_DM) %>%
+  melt() %>%
+  ggplot(aes(x = value, y = variable)) +
+  geom_density_ridges(aes(height = ..density..,
+                          fill = variable), 
+                      scale = 4, bw = "SJ",
+                      stat = "density", alpha = 0.8) +
+  scale_fill_manual(values = custom_palette(5)) +
+  theme(legend.position="none", panel.background = element_blank(), 
+        axis.title = element_blank())
+```
+
+
+## Clustering with hdbscan
+
+As explained in the paper, *hdbscan* [@McInnes2017] from the *dbscan*-package [@Hahsler2017] is used to cluster the rings according to minimum and maximum diameter. First, let hdbscan identify clusters for the original data: 
+```{r hdbscan}
+library(dbscan)
+hdbcluster <- StackR_Miletus %>%
+  select(min_DM, max_DM) %>%
+  hdbscan(minPts = 5)
+```
+
+The outcome (i.e. cluster membership and membership probability) is then added to the original data.frame:
+```{r add_clus_to_df}
+StackR_Miletus$HDBScan_Cluster <- as.factor(hdbcluster$cluster)
+StackR_Miletus$membership_prob <- hdbcluster$membership_prob
+```
+
+And can be visualized using ggplot2, putting the diameters on the x and y axis, displaying cluster membership as point color, membership probability as opacity and shape of the profile as point shape:
+
+```{r hdbscan_viz_1, fig.width=6, fig.height = 6, echo=FALSE}
+ggplot(StackR_Miletus, aes(x=max_DM, y=min_DM, color=HDBScan_Cluster, alpha = membership_prob)) +
+  geom_point(aes(shape=StackR_Miletus$shape), position=position_jitter(width=0.03,height=.03), size=3) +
+  scale_shape_discrete(name="Profile") +
+  scale_alpha_continuous(name="Membership\nProbability") +
+  scale_color_discrete(breaks=c("0", "1", "2", "3"), 
+                       labels=c("noise", "A", "B", "C"),
+                       name="Cluster\n(HDBScan)") +
+  xlab(label="maximum / outer diameter in cm") +
+  ylab(label="minimum / inner diameter in cm") +
+  scale_y_continuous(breaks=seq(0, 20, 0.5)) +
+  scale_x_continuous(breaks=seq(0, 20, 0.5)) +
+  coord_fixed(ratio = 1, xlim = NULL, ylim = NULL, expand = TRUE) +
+  theme(panel.background = element_blank(), 
+        panel.grid.major = element_line(colour = "grey", size = 0.2, linetype = 2),
+        axis.text.x = element_text(angle = 45))
+```
+
+* Cluster A: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 1),])` rings
+* Cluster B: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 2),])` rings
+* Cluster C: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 3),])` rings
+* noise: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 0),])` rings
+
+
+## Summary Statistics
+
+To generate samples based on the actual data, we need summary statistics first:
+
+```{r record_summmary_statistics, echo = TRUE}
+datastructure <- data.frame(matrix(ncol = 5, nrow = 4))
+colnames(datastructure) <- c("height", "min diameter", "max diameter", "width", "thickness") 
+rownames(datastructure) <- c("range", "mean", "sd", "cv")
+
+numvar <- 7:11
+i = 1
+for (col in numvar) {
+  datastructure[1,i] <- range(StackR_Miletus[,col])[2] - range(StackR_Miletus[,col])[1]
+  datastructure[2,i] <- mean(StackR_Miletus[,col])
+  datastructure[3,i] <- sd(StackR_Miletus[,col])
+  datastructure[4,i] <- sd(StackR_Miletus[,col]) / mean(StackR_Miletus[,col])*100
+  i <- i + 1
+}
+```
+
+Which look like this: 
+
+```{r table_summmary_statistics, echo = FALSE}
+datastructure %>%
+  kable("html", digits = 3) %>%
+  kable_styling(font_size = 9, full_width = FALSE, position = "left", 
+                bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+## Testing for Structure Validity
+
+Setup an empty dataframe to record the results of silhouette-tests:
+
+```{r setup_for_comparison, echo = TRUE}
+tests_compare <- data.frame(matrix(ncol = 5, nrow = 1000))
+colnames(tests_compare) <- c("N", "n_cluster", "avg_sil_width", "avg_sil_width_without_0", "n_noise")
+```
+
+
+Based on the info from the summary statistics, the data.frame created above can be filled with 1000 fictional distributions using the mean of the original data and its standard deviation as a basis. First, 3000 fictional distributions will be generated to randomly sample exactly 1000 of them, as sometimes hdbscan may return no clusters and thus the process would produce NA-values, which can be removed beforehand in this way.
+
+
+
+```{r df_for_comparison, echo = TRUE}
+tests_dummy <- data.frame(matrix(ncol = 5, nrow = 3000))
+colnames(tests_dummy) <- colnames(tests_compare)
+library(cluster)
+for (row in 1:nrow(tests_dummy)) {
+  testsample <- data.frame(matrix(nrow = 67, ncol = 2))
+  testsample[,2] <- rnorm(n = 67, mean = datastructure$`min diameter`[2], 
+                          sd = datastructure$`min diameter`[3])
+  testsample[,1] <- rnorm(n = 67, mean = datastructure$width[2], 
+                          sd = datastructure$width[3])
+  testsample[,1] <- ((testsample[,1]*2) + testsample[,2])
+  colnames(testsample) <- c("min_DM", "max_DM")
+  test_dist <- dist(testsample, method = "euclidean")
+  test_hdbcluster <- hdbscan(testsample, minPts = 5)
+  sil_hdbscan <- silhouette(test_hdbcluster$cluster, test_dist, do.clus.stat=T, do.n.k=T)
+  tests_dummy$N[row] <- nrow(testsample)
+  tests_dummy$n_cluster[row] <- length(unique(test_hdbcluster$cluster)) - 1
+  tests_dummy$n_noise[row] <- length(which(test_hdbcluster$cluster == 0))
+  if (tests_dummy$n_cluster[row] >= 1) {
+    mat <- as.data.frame(sil_hdbscan[1:67,1:3])
+    tests_dummy$avg_sil_width[row] <- mean(mat$sil_width)
+    mat <- mat[-which(mat$cluster == 0),]
+    tests_dummy$avg_sil_width_without_0[row] <- mean(mat$sil_width)
+  }
+}
+tests_dummy <- na.omit(tests_dummy)
+tests_compare <- tests_dummy[sample(c(1:nrow(tests_dummy)), replace = FALSE, size = nrow(tests_compare)),]
+```
+
+
+We might as well take a quick look at the silhouette plot for the clusters found in the original data. The silhouette first needs a distance matrix of the original data as well.
+
+```{r silhouette_original_data, echo = TRUE}
+dist <- StackR_Miletus %>%
+  select(min_DM, max_DM) %>%
+  dist(method = "euclidean")
+sil_hdbscan <- silhouette(hdbcluster$cluster, dist, do.clus.stat=T, do.n.k=T)
+```
+
+```{r echo = FALSE}
+plot(sil_hdbscan, border=NA)
+abline(v=c(0.26, 0.51, 0.71), col = c("red", "blue", "green"))
+```
+
+
+
+
+
+Range of SC | Interpretation
+------------|------------------------------------------------
+0.71-1.0    | A strong structure has been found (min. green line)
+0.51-0.70   | A reasonable structure has been found (min. blue line)
+0.26-0.50   | The structure is weak and could be artificial (min. red line)
+< 0.25      | No substantial structure has been found
+(see: @spector_statistics_2011)
+
+
+
+Results from the Silhouette-Test for the original data will be are compiled in a separate dataframe:
+```{r }
+miletus_data_sil <- data.frame(matrix(ncol = 5, nrow = 1))
+colnames(miletus_data_sil) <- colnames(tests_compare)
+miletus_data_sil$N[1] <- nrow(StackR_Miletus)
+miletus_data_sil$n_cluster[1] <- length(unique(hdbcluster$cluster))-1
+miletus_data_sil$n_noise[1] <- length(which(hdbcluster$cluster == 0))
+mat <- as.data.frame(sil_hdbscan[1:67,1:3])
+miletus_data_sil$avg_sil_width[1] <- mean(mat$sil_width)
+mat <- mat[-which(mat$cluster == 0),]
+miletus_data_sil$avg_sil_width_without_0[1] <- mean(mat$sil_width)
+```
+
+
+
+And can then be compared to the distribution of respective values from the generated sample, seen here in density graphs:
+
+```{r density_plot_compare_testsamples, echo = FALSE, warning = FALSE, message=FALSE}
+p1 <- ggplot(data = tests_compare) +
+  geom_density(aes(x = n_cluster, y = ..density..), fill = 'grey') +
+  labs(title = "Number of clusters") +
+  theme(panel.background = element_blank(),
+        panel.grid = element_blank()) +
+  geom_vline(xintercept = miletus_data_sil$n_cluster, col = "red")
+
+p2 <- ggplot(data = tests_compare) +
+  geom_density(aes(x = n_noise, y = ..density..), fill = 'grey') +
+  labs(title = "Number of points in noise-cluster") +
+  theme(panel.background = element_blank(),
+        panel.grid = element_blank()) +
+  geom_vline(xintercept = miletus_data_sil$n_noise, col = "red")
+
+p3 <- ggplot(data = tests_compare) +
+  geom_density(aes(x = avg_sil_width, y = ..density..), fill = 'grey') +
+  labs(title = "Average Silhouette width including noise-cluster") +
+  theme(panel.background = element_blank(),
+        panel.grid = element_blank()) + xlim(0, 1) +
+  geom_vline(xintercept = miletus_data_sil$avg_sil_width, col = "red")
+
+p4 <- ggplot(data = tests_compare) +
+  geom_density(aes(x = avg_sil_width_without_0, y = ..density..), fill = 'grey') +
+  labs(title = "Average Silhouette width without noise-cluster") +
+  theme(panel.background = element_blank(),
+        panel.grid = element_blank()) + xlim(0, 1) +
+  geom_vline(xintercept = miletus_data_sil$avg_sil_width_without_0, col = "red")
+
+library(gridExtra)
+grid.arrange(p1, p2, p3, p4, ncol=2, nrow=2, widths=c(2,2))
+```
+
+## Scaled Comparison of Measured Variables
+
+For the plot in Fig. 12 all the numerical variables where scaled using `scale()` to ease visual comparison:
+
+```{r echo = FALSE}
+StackR_Miletus %>% 
+  transmute(HDBScan_Cluster, 
+            height = scale(height), 
+            min_DM = scale(min_DM), 
+            max_DM = scale(max_DM), 
+            width = scale(width), 
+            thickness = scale(thickness)) %>%
+  filter(HDBScan_Cluster != 0) %>%
+  melt(id.vars = "HDBScan_Cluster") %>%
+  ggplot() +
+  geom_boxplot(aes(y = value, x = HDBScan_Cluster, fill = HDBScan_Cluster)) +
+  facet_wrap( ~ variable, ncol = 5) +
+  theme(legend.position = "none", 
+        axis.title = element_blank())
+```
+
+However, a look at the original boxplot might be interesting as well: 
+
+```{r echo = FALSE}
+StackR_Miletus %>% 
+  select(HDBScan_Cluster, height, min_DM, max_DM, width, thickness) %>%
+  filter(HDBScan_Cluster != 0) %>%
+  melt(id.vars = "HDBScan_Cluster") %>%
+  ggplot() +
+  geom_boxplot(aes(y = value, x = HDBScan_Cluster, fill = HDBScan_Cluster)) +
+  facet_wrap( ~ variable, ncol = 5) +
+  theme(legend.position = "none", 
+        axis.title = element_blank())
+```
+
+As I am unsure of copyright issues in making the data available online, I did not incorporate the comparisons with rings from @monaco_ergasteria_2000 and @cracolici_i_2003.
+
+# References

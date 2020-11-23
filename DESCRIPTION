@@ -1,13 +1,27 @@
 Package: clayringsmiletus
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Clay Stacking Rings found in Miletus (Data)
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Lisa Steinmann
+Maintainer: Lisa Steinmann <lisa.steinmann@rub.de>
+Description: This package contains data on stacking rings found in the area of the 
+    sanctuary of Dionysos in Miletus. The data along with its archaeological context and analysis 
+    has been published in "Archäologischer Anzeiger" 
+    (2020/1, DOI: https://doi.org/10.34780/aa.v0i1.1014).
+License: CC BY-SA 3.0
 Encoding: UTF-8
 LazyData: true
 Depends: 
     R (>= 2.10)
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown,
+    cluster,
+    dbscan,
+    ggridges,
+    gridExtra,
+    kableExtra,
+    reshape2,
+    tidyverse
+VignetteBuilder: knitr

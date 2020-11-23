@@ -1,68 +1,68 @@
-Nr;Inv;clay;applications;color_appl;slip;markings;height;min_DM;max_DM;width;thickness;shape;fragments
-1;MK75.N16.1;pink;stains;red;beige;none;1.30;11.60;14.20;1.30;0.51;straight;9
-2;MK75.N16.7;light reddish brown;stains;dark red;none;none;1.30;11.40;13.80;1.20;0.50;straight;3
-3;;pink;none;;none;tools;1.00;9.40;11.80;1.20;0.42;straight;3
-5;;light reddish brown;streaks;light red;yellowish;none;0.80;12.40;15.60;1.60;0.47;concave;5
-6;MK75.N16.6;light reddish brown;streaks;light red;yellowish;none;1.20;11.60;14.80;1.60;0.34;straight;4
-7;;reddish yellow;streaks;light red;yellowish;none;0.90;11.80;14.80;1.50;0.36;concave;2
-8;;pink;mittig;light red;none;none;0.70;9.80;12.00;1.10;0.42;concave;9
-9;MK75.N16.4;light reddish brown;none;;yellowish;none;1.50;11.40;14.60;1.60;0.57;concave;3
-10;;pink;none;;none;none;1.30;11.40;13.80;1.20;0.55;convex;5
-11;;pink;none;;none;none;1.30;9.80;12.40;1.30;0.56;convex;3
-12;;reddish yellow;none;;none;none;1.20;9.60;12.40;1.40;0.56;convex;3
-13;MK75.N16.5;pink;stains;dark red;none;none;1.00;10.00;12.40;1.20;0.44;concave;3
-14;MK75.N16.2;pink;stains;black;beige;tools;1.00;10.00;12.20;1.10;0.50;concave;1
-15;;pink;smudges;dark red;none;none;0.90;9.40;11.80;1.20;0.51;convex;2
-16;;pink;streaks;dark red;none;tools;1.10;9.60;11.80;1.10;0.39;concave;1
-17;;pink;none;;none;tools;0.70;9.20;12.00;1.40;0.43;concave;2
-18;MK75.N16.9;reddish yellow;streaks;light red;none;none;1.70;6.80;13.20;3.20;0.35;concave;3
-19;;pink;streaks;light red;yellowish;none;1.20;7.00;13.00;3.00;0.31;concave;2
-20;MK75.N16.10;pink;none;;none;none;1.10;6.80;11.80;2.50;0.34;concave;2
-21;;pink;none;;none;none;1.10;6.40;11.80;2.70;0.34;concave;1
-22;;pink;stains;red;none;none;1.20;9.60;15.40;2.90;0.32;concave;1
-23;;pink;streaks;light red;none;none;0.90;7.40;12.20;2.40;0.31;concave;2
-24;;pink;stains;dusky red;none;none;1.30;8.30;15.20;3.45;0.35;concave;1
-25;;pink;stains;light red;none;none;1.90;6.60;13.40;3.40;0.31;concave;3
-26;;pink;stains;red;none;none;1.50;6.60;12.40;2.90;0.34;concave;1
-27;;pink;streaks;light red;yellowish;none;1.40;6.80;13.20;3.20;0.33;concave;2
-28;;pink;stains;black;beige;tools;1.00;9.40;11.80;1.20;0.46;concave;1
-29;;pink;stains;black;beige;tools;1.00;9.60;12.00;1.20;0.50;concave;1
-30;;pink;none;;beige;none;1.10;10.40;14.40;2.00;0.42;concave;2
-31;;light reddish brown;none;;beige;none;1.20;10.20;11.40;0.60;0.55;straight;1
-32;;light reddish brown;stains;black;beige;none;1.40;15.40;17.80;1.20;0.51;straight;1
-34;;light reddish brown;none;;beige;none;1.00;10.00;12.00;1.00;0.56;straight;1
-35;;light reddish brown;none;;beige;none;1.10;9.40;12.00;1.30;0.55;straight;2
-36;;light reddish brown;none;;none;none;1.30;12.20;14.80;1.30;0.54;straight;1
-37;;pink;none;;none;none;1.10;10.80;12.20;0.70;0.43;concave;3
-38;;pink;none;;none;tools;0.80;9.40;12.00;1.30;0.42;concave;1
-39;;pink;none;;none;tools;0.90;10.00;12.60;1.30;0.44;concave;2
-40;;pink;stains;red;none;none;0.90;12.00;14.00;1.00;0.38;concave;1
-41;MK75.N16.8;pink;none;;none;none;1.10;7.00;13.00;3.00;0.35;concave;1
-42;;pink;none;;none;none;1.00;9.00;16.00;3.50;0.38;concave;1
-43;;pink;none;;none;none;1.10;9.80;11.60;0.90;0.47;convex;1
-44;;pink;none;;none;none;0.90;10.40;13.20;1.40;0.52;convex;2
-45;;pink;none;;none;none;1.00;9.80;12.20;1.20;0.47;concave;1
-46;;pink;smudges;dusky red;none;none;0.90;9.60;12.40;1.40;0.48;straight;1
-47;;light reddish brown;streaks;black;none;none;1.50;11.40;15.00;1.80;0.49;straight;1
-48;;pink;none;;none;none;1.20;10.60;12.40;0.90;0.38;concave;1
-49;;pink;stains;black;none;tools;1.00;13.40;16.00;1.30;0.51;straight;1
-50;;pink;none;;none;tools;0.90;11.40;14.00;1.30;0.48;concave;1
-51;;yellowish red;smudges;reddish brown;none;tools;0.80;9.80;12.00;1.10;0.44;concave;1
-52;;pink;smudges;black;none;tools;1.00;10.20;12.60;1.20;0.44;concave;1
-53;;pink;stains;dark red;none;tools;0.90;9.80;12.40;1.30;0.42;concave;1
-54;;pink;smudges;reddish brown;none;none;1.20;10.80;13.40;1.30;0.44;straight;1
-55;;pink;none;;none;none;1.10;11.40;13.80;1.20;0.39;straight;1
-56;;pink;smudges;reddish brown;yellowish;tools;1.10;11.80;14.60;1.40;0.39;straight;2
-57;;pink;smudges;reddish brown;none;none;1.00;11.80;14.80;1.50;0.37;straight;1
-58;;pink;none;;none;none;0.90;9.60;12.20;1.30;0.46;concave;1
-59;MK73.C5.3;reddish yellow;none;;none;tools;1.80;10.00;12.50;1.25;0.39;straight;1
-60;;reddish yellow;none;;none;tools;0.90;8.60;11.40;1.40;0.40;straight;1
-61;;reddish yellow;none;;none;tools;0.80;10.00;13.40;1.70;0.38;straight;1
-62;;pink;none;;none;tools;1.00;9.00;11.80;1.40;0.46;straight;1
-63;;pink;none;;none;none;1.00;11.20;12.40;0.60;0.50;convex;1
-64;;pink;none;;none;none;1.00;11.40;12.40;0.50;0.46;convex;1
-65;MK75.N16.3;pink;none;;none;none;1.17;11.60;12.40;0.40;0.48;convex;1
-66;MK75.N16.11;pink;none;;none;Theta;1.30;12.20;15.20;1.50;0.49;straight;1
-67;MK75.N16.12;pink;stains;;none;Theta (half), tools;1.48;14.60;18.00;1.70;0.49;concave;1
-68;;pink;smudges;reddish black;none;tools;1.20;9.60;11.80;1.10;0.51;straight;5
-69;;light reddish brown;none;;yellowish;none;1.50;11.60;14.80;1.60;0.49;concave;2
+Nr;Inv;clay;applications;color_appl;slip;markings;markings_type;height;min_DM;max_DM;width;thickness;shape;fragments
+1;MK75.N16.1;pink;stains;red;beige;0;none;1.30;11.60;14.20;1.30;0.51;straight;9
+2;MK75.N16.7;light reddish brown;stains;dark red;none;0;none;1.30;11.40;13.80;1.20;0.50;straight;3
+3;;pink;none;;none;1;tools;1.00;9.40;11.80;1.20;0.42;straight;3
+5;;light reddish brown;streaks;light red;yellowish;0;none;0.80;12.40;15.60;1.60;0.47;concave;5
+6;MK75.N16.6;light reddish brown;streaks;light red;yellowish;0;none;1.20;11.60;14.80;1.60;0.34;straight;4
+7;;reddish yellow;streaks;light red;yellowish;0;none;0.90;11.80;14.80;1.50;0.36;concave;2
+8;;pink;mittig;light red;none;0;none;0.70;9.80;12.00;1.10;0.42;concave;9
+9;MK75.N16.4;light reddish brown;none;;yellowish;0;none;1.50;11.40;14.60;1.60;0.57;concave;3
+10;;pink;none;;none;0;none;1.30;11.40;13.80;1.20;0.55;convex;5
+11;;pink;none;;none;0;none;1.30;9.80;12.40;1.30;0.56;convex;3
+12;;reddish yellow;none;;none;0;none;1.20;9.60;12.40;1.40;0.56;convex;3
+13;MK75.N16.5;pink;stains;dark red;none;0;none;1.00;10.00;12.40;1.20;0.44;concave;3
+14;MK75.N16.2;pink;stains;black;beige;1;tools;1.00;10.00;12.20;1.10;0.50;concave;1
+15;;pink;smudges;dark red;none;0;none;0.90;9.40;11.80;1.20;0.51;convex;2
+16;;pink;streaks;dark red;none;1;tools;1.10;9.60;11.80;1.10;0.39;concave;1
+17;;pink;none;;none;1;tools;0.70;9.20;12.00;1.40;0.43;concave;2
+18;MK75.N16.9;reddish yellow;streaks;light red;none;0;none;1.70;6.80;13.20;3.20;0.35;concave;3
+19;;pink;streaks;light red;yellowish;0;none;1.20;7.00;13.00;3.00;0.31;concave;2
+20;MK75.N16.10;pink;none;;none;0;none;1.10;6.80;11.80;2.50;0.34;concave;2
+21;;pink;none;;none;0;none;1.10;6.40;11.80;2.70;0.34;concave;1
+22;;pink;stains;red;none;0;none;1.20;9.60;15.40;2.90;0.32;concave;1
+23;;pink;streaks;light red;none;0;none;0.90;7.40;12.20;2.40;0.31;concave;2
+24;;pink;stains;dusky red;none;0;none;1.30;8.30;15.20;3.45;0.35;concave;1
+25;;pink;stains;light red;none;0;none;1.90;6.60;13.40;3.40;0.31;concave;3
+26;;pink;stains;red;none;0;none;1.50;6.60;12.40;2.90;0.34;concave;1
+27;;pink;streaks;light red;yellowish;0;none;1.40;6.80;13.20;3.20;0.33;concave;2
+28;;pink;stains;black;beige;1;tools;1.00;9.40;11.80;1.20;0.46;concave;1
+29;;pink;stains;black;beige;1;tools;1.00;9.60;12.00;1.20;0.50;concave;1
+30;;pink;none;;beige;0;none;1.10;10.40;14.40;2.00;0.42;concave;2
+31;;light reddish brown;none;;beige;0;none;1.20;10.20;11.40;0.60;0.55;straight;1
+32;;light reddish brown;stains;black;beige;0;none;1.40;15.40;17.80;1.20;0.51;straight;1
+34;;light reddish brown;none;;beige;0;none;1.00;10.00;12.00;1.00;0.56;straight;1
+35;;light reddish brown;none;;beige;0;none;1.10;9.40;12.00;1.30;0.55;straight;2
+36;;light reddish brown;none;;none;0;none;1.30;12.20;14.80;1.30;0.54;straight;1
+37;;pink;none;;none;0;none;1.10;10.80;12.20;0.70;0.43;concave;3
+38;;pink;none;;none;1;tools;0.80;9.40;12.00;1.30;0.42;concave;1
+39;;pink;none;;none;1;tools;0.90;10.00;12.60;1.30;0.44;concave;2
+40;;pink;stains;red;none;0;none;0.90;12.00;14.00;1.00;0.38;concave;1
+41;MK75.N16.8;pink;none;;none;0;none;1.10;7.00;13.00;3.00;0.35;concave;1
+42;;pink;none;;none;0;none;1.00;9.00;16.00;3.50;0.38;concave;1
+43;;pink;none;;none;0;none;1.10;9.80;11.60;0.90;0.47;convex;1
+44;;pink;none;;none;0;none;0.90;10.40;13.20;1.40;0.52;convex;2
+45;;pink;none;;none;0;none;1.00;9.80;12.20;1.20;0.47;concave;1
+46;;pink;smudges;dusky red;none;0;none;0.90;9.60;12.40;1.40;0.48;straight;1
+47;;light reddish brown;streaks;black;none;0;none;1.50;11.40;15.00;1.80;0.49;straight;1
+48;;pink;none;;none;0;none;1.20;10.60;12.40;0.90;0.38;concave;1
+49;;pink;stains;black;none;1;tools;1.00;13.40;16.00;1.30;0.51;straight;1
+50;;pink;none;;none;1;tools;0.90;11.40;14.00;1.30;0.48;concave;1
+51;;yellowish red;smudges;reddish brown;none;1;tools;0.80;9.80;12.00;1.10;0.44;concave;1
+52;;pink;smudges;black;none;1;tools;1.00;10.20;12.60;1.20;0.44;concave;1
+53;;pink;stains;dark red;none;1;tools;0.90;9.80;12.40;1.30;0.42;concave;1
+54;;pink;smudges;reddish brown;none;0;none;1.20;10.80;13.40;1.30;0.44;straight;1
+55;;pink;none;;none;0;none;1.10;11.40;13.80;1.20;0.39;straight;1
+56;;pink;smudges;reddish brown;yellowish;1;tools;1.10;11.80;14.60;1.40;0.39;straight;2
+57;;pink;smudges;reddish brown;none;0;none;1.00;11.80;14.80;1.50;0.37;straight;1
+58;;pink;none;;none;0;none;0.90;9.60;12.20;1.30;0.46;concave;1
+59;MK73.C5.3;reddish yellow;none;;none;1;tools;1.80;10.00;12.50;1.25;0.39;straight;1
+60;;reddish yellow;none;;none;1;tools;0.90;8.60;11.40;1.40;0.40;straight;1
+61;;reddish yellow;none;;none;1;tools;0.80;10.00;13.40;1.70;0.38;straight;1
+62;;pink;none;;none;1;tools;1.00;9.00;11.80;1.40;0.46;straight;1
+63;;pink;none;;none;0;none;1.00;11.20;12.40;0.60;0.50;convex;1
+64;;pink;none;;none;0;none;1.00;11.40;12.40;0.50;0.46;convex;1
+65;MK75.N16.3;pink;none;;none;0;none;1.17;11.60;12.40;0.40;0.48;convex;1
+66;MK75.N16.11;pink;none;;none;1;Theta;1.30;12.20;15.20;1.50;0.49;straight;1
+67;MK75.N16.12;pink;stains;;none;1;Theta (half),  tools;1.48;14.60;18.00;1.70;0.49;concave;1
+68;;pink;smudges;reddish black;none;1;tools;1.20;9.60;11.80;1.10;0.51;straight;5
+69;;light reddish brown;none;;yellowish;0;none;1.50;11.60;14.80;1.60;0.49;concave;2
