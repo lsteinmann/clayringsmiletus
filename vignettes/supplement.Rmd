@@ -1,10 +1,11 @@
 ---
-title: "supplement"
+title: "Clay Rings from the Sanctuary of Dionysos in Miletus: Supplement"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{supplement}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+bibliography: literatur.bib
 ---
 
 ```{r, include = FALSE}
@@ -12,7 +13,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-knitr::opts_chunk$set(warning = FALSE, echo = TRUE, fig.width = 12)
+knitr::opts_chunk$set(warning = FALSE, echo = TRUE, fig.width = 7)
 custom_palette <- c("#8dae25", "#17365c")
 custom_palette <- colorRampPalette(custom_palette, bias = 1, interpolate = "linear")
 
@@ -22,9 +23,11 @@ library(kableExtra)
 
 This document is intended as a supplement to the paper [**Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus, Archäologischer Anzeiger 2020/1**](https://publications.dainst.org/journals/index.php/aa/article/view/2619) [@steinmann_clay_rings_2020]. 
 
-> *Abstract*: During its excavation in the 1970s, a large number of unidentifiable objects were found in the sanctuary of Dionysos in Miletus: »Peculiar and as of now not explicable for the editor [Willi Real] are numerous fragments of flat rings […]. They are reminiscent of the rings used for modern coal stoves. […] Hitherto no interpretation has been found.« [@real_milet_1977 105]. In the course of a re-examination of the excavation’s findings since 2017, it has been possible to find similar rings from different places in the Mediterranean. It is plausible that these until now unidentified objects are stacking rings used in potters workshops, an isolated and unique find for 5th century Miletus. In this article, the rings will be compared and classified, followed by an assessment of their functionality as well as a discussion of their context. (Preliminary reports of the excavation: @muller-wiener_milet_1977 and @muller-wiener_milet_1979)
+> *Abstract*: During its excavation in the 1970s, a large number of unidentifiable objects were found in the sanctuary of Dionysos in Miletus: »Peculiar and as of now not explicable for the editor [Willi Real] are numerous fragments of flat rings […]. They are reminiscent of the rings used for modern coal stoves. […] Hitherto no interpretation has been found.« In the course of a re-examination of the excavation’s findings since 2017, it has been possible to find similar rings from different places in the Mediterranean. It is plausible that these until now unidentified objects are stacking rings used in potters workshops, an isolated and unique find for 5th century Miletus. In this article, the rings will be compared and classified, followed by an assessment of their functionality as well as a discussion of their context. 
 
-The github repository provides all the data used in said paper. This document contains all the code used to generate the relevant graphs and findings in the paper mentioned. It is not intended as an explanation of methodology -- as this is already provided in the paper itself -- but as additional transparency.
+(Preliminary reports of the excavation: @muller-wiener_milet_1977 and @muller-wiener_milet_1979, finds: [@real_milet_1977 105])
+
+This github repository provides all the original data used in said paper. This document contains all the code used to generate the relevant graphs and findings. It is not intended as an explanation of methodology -- as this is already provided in the paper itself -- but as additional transparency.
 
 
 ## The Data
@@ -34,14 +37,14 @@ The table provided in the publication [@steinmann_clay_rings_2020 fig. 16] is av
 
 ```{r setup}
 library(clayringsmiletus)
-data("StackR_Miletus")
+data("StackRMiletus")
 ```
 
 All measurements were gathered by the author during a research stay in Miletus in 2017, funded by the Research School of the Ruhr-University in Bochum. Subsequent work was accomplished during a stipend of the [Gerda Henkel Foundation](https://www.gerda-henkel-stiftung.de/) I received for my PhD project "The Sanctuary of Dionysos in the Sacral Landscape of Miletus" at the Ruhr-University Bochum and since 2020 at the University of Hamburg. The table included the following data (sample of inventoried rings):
 
-```{r display_table_1, echo = FALSE}
+```{r display_table_1, echo = FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
-StackR_Miletus %>%
+StackRMiletus %>%
   filter(!is.na(Inv)) %>% arrange(Inv) %>%
   kable("html") %>%
   kable_styling(font_size = 9, full_width = FALSE, position = "left", 
@@ -52,11 +55,11 @@ StackR_Miletus %>%
 
 The first step in the paper is to look at the distribution of measurements with a density graph of the numeric variables. Thickness and Height are multiplied by 10 to make the outcome more visible. All measurements are originally in cm.
 
-```{r density_prep, echo = TRUE, message= FALSE, fig.height=3}
+```{r density_prep, echo = TRUE, message= FALSE}
 library(reshape2)
 library(ggridges)
 
-StackR_Miletus %>%
+StackRMiletus %>%
   transmute("thickness*10" = thickness*10, 
             "height*10" = height*10,
             width, min_DM, max_DM) %>%
@@ -77,22 +80,26 @@ StackR_Miletus %>%
 As explained in the paper, *hdbscan* [@McInnes2017] from the *dbscan*-package [@Hahsler2017] is used to cluster the rings according to minimum and maximum diameter. First, let hdbscan identify clusters for the original data: 
 ```{r hdbscan}
 library(dbscan)
-hdbcluster <- StackR_Miletus %>%
+hdbcluster <- StackRMiletus %>%
   select(min_DM, max_DM) %>%
   hdbscan(minPts = 5)
 ```
 
 The outcome (i.e. cluster membership and membership probability) is then added to the original data.frame:
 ```{r add_clus_to_df}
-StackR_Miletus$HDBScan_Cluster <- as.factor(hdbcluster$cluster)
-StackR_Miletus$membership_prob <- hdbcluster$membership_prob
+StackRMiletus$HDBScan_Cluster <- as.factor(hdbcluster$cluster)
+StackRMiletus$membership_prob <- hdbcluster$membership_prob
 ```
 
 And can be visualized using ggplot2, putting the diameters on the x and y axis, displaying cluster membership as point color, membership probability as opacity and shape of the profile as point shape:
 
 ```{r hdbscan_viz_1, fig.width=6, fig.height = 6, echo=FALSE}
-ggplot(StackR_Miletus, aes(x=max_DM, y=min_DM, color=HDBScan_Cluster, alpha = membership_prob)) +
-  geom_point(aes(shape=StackR_Miletus$shape), position=position_jitter(width=0.03,height=.03), size=3) +
+ggplot(StackRMiletus, aes(x=max_DM, y=min_DM, 
+                          color=HDBScan_Cluster, 
+                          alpha = membership_prob)) +
+  geom_point(aes(shape=StackRMiletus$shape), 
+             position=position_jitter(width=0.03,height=.03), 
+             size=3) +
   scale_shape_discrete(name="Profile") +
   scale_alpha_continuous(name="Membership\nProbability") +
   scale_color_discrete(breaks=c("0", "1", "2", "3"), 
@@ -108,10 +115,10 @@ ggplot(StackR_Miletus, aes(x=max_DM, y=min_DM, color=HDBScan_Cluster, alpha = me
         axis.text.x = element_text(angle = 45))
 ```
 
-* Cluster A: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 1),])` rings
-* Cluster B: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 2),])` rings
-* Cluster C: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 3),])` rings
-* noise: `r nrow(StackR_Miletus[which(StackR_Miletus$HDBScan_Cluster == 0),])` rings
+* Cluster A: `r nrow(StackRMiletus[which(StackRMiletus$HDBScan_Cluster == 1),])` rings
+* Cluster B: `r nrow(StackRMiletus[which(StackRMiletus$HDBScan_Cluster == 2),])` rings
+* Cluster C: `r nrow(StackRMiletus[which(StackRMiletus$HDBScan_Cluster == 3),])` rings
+* noise: `r nrow(StackRMiletus[which(StackRMiletus$HDBScan_Cluster == 0),])` rings
 
 
 ## Summary Statistics
@@ -123,13 +130,13 @@ datastructure <- data.frame(matrix(ncol = 5, nrow = 4))
 colnames(datastructure) <- c("height", "min diameter", "max diameter", "width", "thickness") 
 rownames(datastructure) <- c("range", "mean", "sd", "cv")
 
-numvar <- 7:11
+numvar <- 8:12
 i = 1
 for (col in numvar) {
-  datastructure[1,i] <- range(StackR_Miletus[,col])[2] - range(StackR_Miletus[,col])[1]
-  datastructure[2,i] <- mean(StackR_Miletus[,col])
-  datastructure[3,i] <- sd(StackR_Miletus[,col])
-  datastructure[4,i] <- sd(StackR_Miletus[,col]) / mean(StackR_Miletus[,col])*100
+  datastructure[1,i] <- range(StackRMiletus[,col])[2] - range(StackRMiletus[,col])[1]
+  datastructure[2,i] <- mean(StackRMiletus[,col])
+  datastructure[3,i] <- sd(StackRMiletus[,col])
+  datastructure[4,i] <- sd(StackRMiletus[,col]) / mean(StackRMiletus[,col])*100
   i <- i + 1
 }
 ```
@@ -158,20 +165,31 @@ Based on the info from the summary statistics, the data.frame created above can 
 
 
 ```{r df_for_comparison, echo = TRUE}
-tests_dummy <- data.frame(matrix(ncol = 5, nrow = 3000))
+tests_dummy <- data.frame(matrix(ncol = 5, 
+                                 nrow = 3000))
+
 colnames(tests_dummy) <- colnames(tests_compare)
+
 library(cluster)
+
 for (row in 1:nrow(tests_dummy)) {
-  testsample <- data.frame(matrix(nrow = 67, ncol = 2))
-  testsample[,2] <- rnorm(n = 67, mean = datastructure$`min diameter`[2], 
+  testsample <- data.frame(matrix(nrow = 67, 
+                                  ncol = 2))
+  testsample[,2] <- rnorm(n = 67, 
+                          mean = datastructure$`min diameter`[2], 
                           sd = datastructure$`min diameter`[3])
-  testsample[,1] <- rnorm(n = 67, mean = datastructure$width[2], 
+  testsample[,1] <- rnorm(n = 67, 
+                          mean = datastructure$width[2], 
                           sd = datastructure$width[3])
   testsample[,1] <- ((testsample[,1]*2) + testsample[,2])
   colnames(testsample) <- c("min_DM", "max_DM")
+  
   test_dist <- dist(testsample, method = "euclidean")
   test_hdbcluster <- hdbscan(testsample, minPts = 5)
-  sil_hdbscan <- silhouette(test_hdbcluster$cluster, test_dist, do.clus.stat=T, do.n.k=T)
+  sil_hdbscan <- silhouette(test_hdbcluster$cluster, 
+                            test_dist, 
+                            do.clus.stat=T, 
+                            do.n.k=T)
   tests_dummy$N[row] <- nrow(testsample)
   tests_dummy$n_cluster[row] <- length(unique(test_hdbcluster$cluster)) - 1
   tests_dummy$n_noise[row] <- length(which(test_hdbcluster$cluster == 0))
@@ -190,7 +208,7 @@ tests_compare <- tests_dummy[sample(c(1:nrow(tests_dummy)), replace = FALSE, siz
 We might as well take a quick look at the silhouette plot for the clusters found in the original data. The silhouette first needs a distance matrix of the original data as well.
 
 ```{r silhouette_original_data, echo = TRUE}
-dist <- StackR_Miletus %>%
+dist <- StackRMiletus %>%
   select(min_DM, max_DM) %>%
   dist(method = "euclidean")
 sil_hdbscan <- silhouette(hdbcluster$cluster, dist, do.clus.stat=T, do.n.k=T)
@@ -215,11 +233,12 @@ Range of SC | Interpretation
 
 
 
-Results from the Silhouette-Test for the original data will be are compiled in a separate dataframe:
+Results from the Silhouette-Test for the original data will be are compiled in a separate data.frame:
+
 ```{r }
 miletus_data_sil <- data.frame(matrix(ncol = 5, nrow = 1))
 colnames(miletus_data_sil) <- colnames(tests_compare)
-miletus_data_sil$N[1] <- nrow(StackR_Miletus)
+miletus_data_sil$N[1] <- nrow(StackRMiletus)
 miletus_data_sil$n_cluster[1] <- length(unique(hdbcluster$cluster))-1
 miletus_data_sil$n_noise[1] <- length(which(hdbcluster$cluster == 0))
 mat <- as.data.frame(sil_hdbscan[1:67,1:3])
@@ -270,7 +289,7 @@ grid.arrange(p1, p2, p3, p4, ncol=2, nrow=2, widths=c(2,2))
 For the plot in Fig. 12 all the numerical variables where scaled using `scale()` to ease visual comparison:
 
 ```{r echo = FALSE}
-StackR_Miletus %>% 
+StackRMiletus %>% 
   transmute(HDBScan_Cluster, 
             height = scale(height), 
             min_DM = scale(min_DM), 
@@ -289,7 +308,7 @@ StackR_Miletus %>%
 However, a look at the original boxplot might be interesting as well: 
 
 ```{r echo = FALSE}
-StackR_Miletus %>% 
+StackRMiletus %>% 
   select(HDBScan_Cluster, height, min_DM, max_DM, width, thickness) %>%
   filter(HDBScan_Cluster != 0) %>%
   melt(id.vars = "HDBScan_Cluster") %>%
