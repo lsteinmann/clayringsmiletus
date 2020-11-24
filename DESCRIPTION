@@ -1,7 +1,7 @@
 Package: clayringsmiletus
 Type: Package
 Title: Clay Stacking Rings found in Miletus (Data)
-Version: 0.1.0
+Version: 1.0.0
 Author: Lisa Steinmann
 Maintainer: Lisa Steinmann <lisa.steinmann@rub.de>
 Description: This package contains data on stacking rings found in the area of the 
