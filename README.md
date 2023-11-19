@@ -1,11 +1,12 @@
 <!-- badges: start -->
-[![R build status](https://github.com/lsteinmann/clayringsmiletus/workflows/R-CMD-check/badge.svg)](https://github.com/lsteinmann/clayringsmiletus/actions)
+[![R-CMD-check](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml)
+[![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by/4.0/)
 <!-- badges: end -->
 
 
 # Stacking Rings from Miletus
 
-This repository provides all the data used in [L. Steinmann, Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus, Archäologischer Anzeiger 2020/1, 2020](https://doi.org/10.34780/aa.v0i1.1014). The vignette (vignettes/supplement.Rmd) contains the code used to generate most of the graphs and findings as seen in the paper. This repository is not intended as an explanation of methodology or the archaeological finds -- as this is already provided in the paper itself -- but as additional transparency and a way of making the data available. For further information, see the paper:
+This repository provides all the data used in [L. Steinmann, Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus, Archäologischer Anzeiger 2020/1, 2020](https://doi.org/10.34780/aa.v0i1.1014). The vignette (see `browseVignettes("clayringsmiletus")`) contains the code used to generate most of the graphs and findings as seen in the paper. This repository is not intended as an explanation of methodology or the archaeological finds -- as this is already provided in the paper itself -- but as additional transparency and a way of making the data available. For further information, see the paper:
 
 ## Publication
 
@@ -27,16 +28,16 @@ This repository provides all the data used in [L. Steinmann, Finds from Miletus 
 
 ## Import
 
-The data can be loaded into R directly via devtools and github:
+The data can be loaded into R directly via `remotes` or `devtools`:
 
 ```
-devtools::install_github("lsteinmann/clayringsmiletus")
+devtools::install_github("lsteinmann/clayringsmiletus", build_vignettes = TRUE)
+# OR
+remotes::install_github("lsteinmann/clayringsmiletus", build_vignettes = TRUE)
 ```
 
 If you use other software, feel free to just download the table ("2017_Clay_Rings_Miletus.csv", semicolon separated) from the "data-raw" subdirectory.
 
 
-## Invitation and License
+## Invitation
 I welcome anyone who wishes to use the data for further analysis or comparison with their own finds, and I would be even happier if you let me know of your ideas, approaches and results!
-
-[![Licence](https://i.creativecommons.org/l/by-sa/3.0/88x31.png)](http://creativecommons.org/licenses/by-sa/3.0/)

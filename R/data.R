@@ -1,8 +1,9 @@
-#' Stacking Ring from Miletus
+#' Stacking Rings from Miletus
 #'
-#' This data contains all individual rings listed in fig. 16 from Finds from
-#' "Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus,
-#' Archäologischer Anzeiger 2020/1" (https://doi.org/10.34780/aa.v0i1.1014).
+#' This data contains all individual rings listed in fig. 16 of the paper
+#' _Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus_,
+#' published in Archäologischer Anzeiger 2020/1
+#' (https://doi.org/10.34780/aa.v0i1.1014).
 #'
 #' @format A data frame with 67 rows and 15 variables:
 #' \describe{
@@ -25,6 +26,7 @@
 #' @docType data
 #' @keywords datasets, archaeology, pottery, classical
 #' @name StackRMiletus
-#' @usage data(StackRMiletus)
+#' @usage data("StackRMiletus")
 #' @source L. Steinmann, https://doi.org/10.34780/aa.v0i1.1014
 "StackRMiletus"
+NULL
