@@ -43,7 +43,7 @@ data("StackRMiletus")
 All measurements were gathered by the author during a research stay in Miletus in 2017, funded by the Research School of the Ruhr-University in Bochum. Subsequent work was accomplished during a stipend of the [Gerda Henkel Foundation](https://www.gerda-henkel-stiftung.de/) I received for my PhD project "The Sanctuary of Dionysos in the Sacral Landscape of Miletus" at the Ruhr-University Bochum and since 2020 at the University of Hamburg. The table included the following data (sample of inventoried rings):
 
 ```{r display_table_1, echo = FALSE, warning=FALSE, message=FALSE}
-library(tidyverse)
+library(dplyr)
 StackRMiletus %>%
   filter(!is.na(Inv)) %>% arrange(Inv) %>%
   kable("html") %>%
@@ -58,6 +58,7 @@ The first step in the paper is to look at the distribution of measurements with 
 ```{r density_prep, echo = TRUE, message= FALSE}
 library(reshape2)
 library(ggridges)
+library(ggplot2)
 
 StackRMiletus %>%
   transmute("thickness*10" = thickness*10, 
@@ -111,7 +112,7 @@ ggplot(StackRMiletus, aes(x=max_DM, y=min_DM,
   scale_x_continuous(breaks=seq(0, 20, 0.5)) +
   coord_fixed(ratio = 1, xlim = NULL, ylim = NULL, expand = TRUE) +
   theme(panel.background = element_blank(), 
-        panel.grid.major = element_line(colour = "grey", size = 0.2, linetype = 2),
+        panel.grid.major = element_line(colour = "grey", linewidth = 0.2, linetype = 2),
         axis.text.x = element_text(angle = 45))
 ```
 
