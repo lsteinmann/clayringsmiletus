@@ -1,6 +1,6 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml)
-[![CC BY 4.0][cc-by-shield]][cc-by]
+[![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by/4.0/)
 <!-- badges: end -->
 
 
@@ -28,16 +28,16 @@ This repository provides all the data used in [L. Steinmann, Finds from Miletus 
 
 ## Import
 
-The data can be loaded into R directly via devtools and github:
+The data can be loaded into R directly via `remotes` or `devtools`:
 
 ```
 devtools::install_github("lsteinmann/clayringsmiletus", build_vignettes = TRUE)
+# OR
+remotes::install_github("lsteinmann/clayringsmiletus", build_vignettes = TRUE)
 ```
 
 If you use other software, feel free to just download the table ("2017_Clay_Rings_Miletus.csv", semicolon separated) from the "data-raw" subdirectory.
 
 
-## Invitation and License
+## Invitation
 I welcome anyone who wishes to use the data for further analysis or comparison with their own finds, and I would be even happier if you let me know of your ideas, approaches and results!
-
-[![Licence](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
