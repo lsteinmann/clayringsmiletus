@@ -62,18 +62,20 @@ library(ggridges)
 library(ggplot2)
 
 StackRMiletus %>%
-  transmute("thickness*10" = thickness * 10, 
-            "height*10" = height * 10,
-            width, min_DM, max_DM) %>%
+  transmute(
+    thickness_mm = thickness * 10,
+    height_mm = height * 10, 
+    width_cm = width, 
+    min_DM_cm = min_DM, 
+    max_DM_cm = max_DM) %>%
   melt() %>%
-  ggplot(aes(x = value, y = variable)) +
-  geom_density_ridges(aes(height = after_stat(density),
-                          fill = variable), 
-                      scale = 4, bw = "SJ",
-                      stat = "density", alpha = 0.8) +
+  ggplot(aes(x = value, y = variable, fill = variable)) + 
+  geom_density_ridges(scale = 4, bw = "SJ", alpha = 0.8) +
   scale_fill_manual(values = custom_palette(5)) +
-  theme(legend.position="none", panel.background = element_blank(), 
-        axis.title = element_blank())
+  theme(legend.position = "none", 
+        panel.background = element_blank(), 
+        axis.title = element_blank()) +
+  labs(title = "Numerical variables across all rings")
 ```
 
 
