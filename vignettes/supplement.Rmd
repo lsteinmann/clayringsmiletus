@@ -15,7 +15,11 @@ knitr::opts_chunk$set(
 )
 knitr::opts_chunk$set(warning = FALSE, echo = TRUE, fig.width = 7)
 custom_palette <- c("#8dae25", "#17365c")
-custom_palette <- colorRampPalette(custom_palette, bias = 1, interpolate = "linear")
+custom_palette <- colorRampPalette(
+  custom_palette, 
+  bias = 1, 
+  interpolate = "linear"
+)
 
 library(knitr)
 library(kableExtra)
@@ -48,8 +52,11 @@ StackRMiletus %>%
   filter(!is.na(Inv)) %>% 
   arrange(Inv) %>%
   kable("html") %>%
-  kable_styling(font_size = 9, full_width = FALSE, position = "left", 
-                bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+  kable_styling(
+    font_size = 9, 
+    full_width = FALSE, 
+    position = "left", 
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
 ## Classification of the Milesian Clay Rings
@@ -115,7 +122,9 @@ ggplot(StackRMiletus, aes(x = max_DM, y = min_DM,
   scale_x_continuous(breaks = seq(0, 20, 0.5)) +
   coord_fixed(ratio = 1, xlim = NULL, ylim = NULL, expand = TRUE) +
   theme(panel.background = element_blank(), 
-        panel.grid.major = element_line(colour = "grey", linewidth = 0.2, linetype = 2),
+        panel.grid.major = element_line(colour = "grey", 
+                                        linewidth = 0.2, 
+                                        linetype = 2),
         axis.text.x = element_text(angle = 45))
 ```
 
@@ -152,7 +161,8 @@ Which look like this:
 datastructure %>%
   kable("html", digits = 3) %>%
   kable_styling(font_size = 9, full_width = FALSE, position = "left", 
-                bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+                bootstrap_options = c("striped", "hover", 
+                                      "condensed", "responsive"))
 ```
 
 ## Testing for Structure Validity
@@ -161,7 +171,8 @@ Setup an empty dataframe to record the results of silhouette-tests:
 
 ```{r setup_for_comparison, echo = TRUE}
 tests_compare <- data.frame(matrix(ncol = 5, nrow = 1000))
-colnames(tests_compare) <- c("N", "n_cluster", "avg_sil_width", "avg_sil_width_without_0", "n_noise")
+colnames(tests_compare) <- c("N", "n_cluster", "avg_sil_width", 
+                             "avg_sil_width_without_0", "n_noise")
 ```
 
 
@@ -206,7 +217,7 @@ for (row in seq_len(nrow(tests_dummy))) {
   }
 }
 tests_dummy <- na.omit(tests_dummy)
-tests_compare <- tests_dummy[sample(c(1:nrow(tests_dummy)), 
+tests_compare <- tests_dummy[sample(seq_len(nrow(tests_dummy)), 
                                     replace = FALSE, 
                                     size = nrow(tests_compare)), ]
 ```
@@ -263,32 +274,44 @@ And can then be compared to the distribution of respective values from the gener
 
 ```{r density_plot_compare_testsamples, echo = FALSE, warning = FALSE, message=FALSE}
 p1 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = n_cluster, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = n_cluster, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Number of clusters") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) +
-  geom_vline(xintercept = miletus_data_sil$n_cluster, col = "red")
+  geom_vline(xintercept = miletus_data_sil$n_cluster, 
+             col = "red")
 
 p2 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = n_noise, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = n_noise, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Number of points in noise-cluster") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) +
-  geom_vline(xintercept = miletus_data_sil$n_noise, col = "red")
+  geom_vline(xintercept = miletus_data_sil$n_noise, 
+             col = "red")
 
 p3 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = avg_sil_width, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = avg_sil_width, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Average Silhouette width including noise-cluster") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) + xlim(0, 1) +
-  geom_vline(xintercept = miletus_data_sil$avg_sil_width, col = "red")
+  geom_vline(xintercept = miletus_data_sil$avg_sil_width, 
+             col = "red")
 
 p4 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = avg_sil_width_without_0, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = avg_sil_width_without_0, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Average Silhouette width without noise-cluster") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) + xlim(0, 1) +
-  geom_vline(xintercept = miletus_data_sil$avg_sil_width_without_0, col = "red")
+  geom_vline(xintercept = miletus_data_sil$avg_sil_width_without_0, 
+             col = "red")
 
 library(gridExtra)
 grid.arrange(p1, p2, p3, p4, 
