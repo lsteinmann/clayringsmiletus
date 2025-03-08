@@ -177,7 +177,7 @@ colnames(tests_dummy) <- colnames(tests_compare)
 
 library(cluster)
 
-for (row in 1:nrow(tests_dummy)) {
+for (row in seq_len(nrow(tests_dummy))) {
   testsample <- data.frame(matrix(nrow = 67, 
                                   ncol = 2))
   testsample[, 2] <- rnorm(n = 67, 
