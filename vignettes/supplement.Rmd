@@ -5,7 +5,7 @@ vignette: >
   %\VignetteIndexEntry{supplement}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: literatur.bib
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
