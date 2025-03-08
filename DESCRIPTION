@@ -4,11 +4,13 @@ Title: Clay Stacking Rings found in Miletus (Data)
 Version: 1.0.2
 Author: Lisa Steinmann
 Maintainer: Lisa Steinmann <lisa.steinmann@rub.de>
-Description: This package contains data on stacking rings found in the
-    area of the sanctuary of Dionysos in Miletus. The data along with its
-    archaeological context and analysis has been published in
-    "Archäologischer Anzeiger" (2020/1, DOI:
-    <https://doi.org/10.34780/aa.v0i1.1014>).
+Description: Stacking rings are tools used to stack pottery in a Kiln.
+    A relatively large group of stacking rings was found in the area of the 
+    sanctuary of Dionysos in Miletus in the 1970s. Measurements 
+    and additional info is gathered in this package and made available for use
+    by other researchers. The data along with its archaeological context 
+    and analysis has been published 
+    in "Archäologischer Anzeiger" (2020/1, <doi:10.34780/aa.v0i1.1014>).
 License: CC BY 4.0
 Depends: 
     R (>= 2.10)
