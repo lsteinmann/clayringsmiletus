@@ -24,7 +24,7 @@ A data frame with 67 rows and 15 variables:
 }
 }
 \source{
-L. Steinmann, <https://doi.org/10.34780/aa.v0i1.1014>
+L. Steinmann, Clay Rings from the Sanctuary of Dionysos in Miletus, <doi:10.34780/aa.v0i1.1014>
 }
 \usage{
 data("StackRMiletus")
@@ -35,7 +35,4 @@ _Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus_
 published in Archäologischer Anzeiger 2020/1
 (<https://doi.org/10.34780/aa.v0i1.1014>).
 }
-\keyword{archaeology,}
-\keyword{classical}
-\keyword{datasets,}
-\keyword{pottery,}
+\keyword{datasets}

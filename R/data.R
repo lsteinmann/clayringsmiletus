@@ -23,10 +23,8 @@
 #'   \item{fragments}{Numeric. Number of fragments assigned to this ring}
 #' }
 #'
-#' @docType data
-#' @keywords datasets, archaeology, pottery, classical
 #' @name StackRMiletus
 #' @usage data("StackRMiletus")
-#' @source L. Steinmann, <https://doi.org/10.34780/aa.v0i1.1014>
+#' @source L. Steinmann, Clay Rings from the Sanctuary of Dionysos in Miletus, <doi:10.34780/aa.v0i1.1014>
 "StackRMiletus"
 NULL
