@@ -3,7 +3,7 @@
 \docType{data}
 \name{StackRMiletus}
 \alias{StackRMiletus}
-\title{Stacking Ring from Miletus}
+\title{Stacking Rings from Miletus}
 \format{
 A data frame with 67 rows and 15 variables:
 \describe{
@@ -24,15 +24,16 @@ A data frame with 67 rows and 15 variables:
 }
 }
 \source{
-L. Steinmann, https://doi.org/10.34780/aa.v0i1.1014
+L. Steinmann, <https://doi.org/10.34780/aa.v0i1.1014>
 }
 \usage{
-data(StackRMiletus)
+data("StackRMiletus")
 }
 \description{
-This data contains all individual rings listed in fig. 16 from Finds from
-"Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus,
-Archäologischer Anzeiger 2020/1" (https://doi.org/10.34780/aa.v0i1.1014).
+This data contains all individual rings listed in fig. 16 of the paper
+_Finds from Miletus XXXII: Clay Rings from the Sanctuary of Dionysos in Miletus_,
+published in Archäologischer Anzeiger 2020/1
+(<https://doi.org/10.34780/aa.v0i1.1014>).
 }
 \keyword{archaeology,}
 \keyword{classical}
