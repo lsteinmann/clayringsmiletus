@@ -131,18 +131,18 @@ To generate samples based on the actual data, we need summary statistics first:
 
 ```{r record_summmary_statistics, echo = TRUE}
 datastructure <- data.frame(matrix(ncol = 5, nrow = 4))
-colnames(datastructure) <- c("height", "min diameter", "max diameter", 
+colnames(datastructure) <- c("height", "min_DM", "max_DM", 
                              "width", "thickness") 
 rownames(datastructure) <- c("range", "mean", "sd", "cv")
 
-numvar <- 8:12
-i = 1
-for (col in numvar) {
-  datastructure[1,i] <- range(StackRMiletus[, col])[2] - range(StackRMiletus[, col])[1]
-  datastructure[2,i] <- mean(StackRMiletus[, col])
-  datastructure[3,i] <- sd(StackRMiletus[, col])
-  datastructure[4,i] <- sd(StackRMiletus[, col]) / mean(StackRMiletus[, col]) * 100
-  i <- i + 1
+for (col in colnames(datastructure)) {
+  range <- range(StackRMiletus[, col])
+  sd <- sd(StackRMiletus[, col])
+  mean <- mean(StackRMiletus[, col])
+  datastructure["range", col] <- range[2] - range[1]
+  datastructure["mean", col] <- mean
+  datastructure["sd", col] <- sd
+  datastructure["cv", col] <- sd / mean * 100
 }
 ```
 
@@ -181,8 +181,8 @@ for (row in seq_len(nrow(tests_dummy))) {
   testsample <- data.frame(matrix(nrow = 67, 
                                   ncol = 2))
   testsample[, 2] <- rnorm(n = 67, 
-                           mean = datastructure$`min diameter`[2], 
-                           sd = datastructure$`min diameter`[3])
+                           mean = datastructure$min_DM[2], 
+                           sd = datastructure$max_DM[3])
   testsample[, 1] <- rnorm(n = 67, 
                            mean = datastructure$width[2], 
                            sd = datastructure$width[3])
