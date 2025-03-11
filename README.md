@@ -34,7 +34,7 @@ The data can be loaded into R directly via installing the package from CRAN:
 ```
 install.packages('clayringsmiletus')
 library(clayringsmiletus)
-data('StackRMiletus)
+data('StackRMiletus')
 ```
 
 If you use other software, feel free to just download the table ("2017_Clay_Rings_Miletus.csv", semicolon separated) from the "data-raw" subdirectory.
