@@ -1,6 +1,7 @@
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml)
 [![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by/4.0/)
+[![CRAN status](https://www.r-pkg.org/badges/version/clayringsmiletus)](https://CRAN.R-project.org/package=clayringsmiletus)
 <!-- badges: end -->
 
 
@@ -28,12 +29,12 @@ This repository provides all the data used in [L. Steinmann, Finds from Miletus 
 
 ## Import
 
-The data can be loaded into R directly via `remotes` or `devtools`:
+The data can be loaded into R directly via installing the package from CRAN:
 
 ```
-devtools::install_github("lsteinmann/clayringsmiletus", build_vignettes = TRUE)
-# OR
-remotes::install_github("lsteinmann/clayringsmiletus", build_vignettes = TRUE)
+install.packages('clayringsmiletus')
+library(clayringsmiletus)
+data('StackRMiletus)
 ```
 
 If you use other software, feel free to just download the table ("2017_Clay_Rings_Miletus.csv", semicolon separated) from the "data-raw" subdirectory.
