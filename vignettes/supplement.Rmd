@@ -5,7 +5,7 @@ vignette: >
   %\VignetteIndexEntry{supplement}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-bibliography: literatur.bib
+bibliography: references.bib
 ---
 
 ```{r, include = FALSE}
@@ -15,7 +15,11 @@ knitr::opts_chunk$set(
 )
 knitr::opts_chunk$set(warning = FALSE, echo = TRUE, fig.width = 7)
 custom_palette <- c("#8dae25", "#17365c")
-custom_palette <- colorRampPalette(custom_palette, bias = 1, interpolate = "linear")
+custom_palette <- colorRampPalette(
+  custom_palette, 
+  bias = 1, 
+  interpolate = "linear"
+)
 
 library(knitr)
 library(kableExtra)
@@ -48,8 +52,11 @@ StackRMiletus %>%
   filter(!is.na(Inv)) %>% 
   arrange(Inv) %>%
   kable("html") %>%
-  kable_styling(font_size = 9, full_width = FALSE, position = "left", 
-                bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+  kable_styling(
+    font_size = 9, 
+    full_width = FALSE, 
+    position = "left", 
+    bootstrap_options = c("striped", "hover", "condensed", "responsive"))
 ```
 
 ## Classification of the Milesian Clay Rings
@@ -62,18 +69,20 @@ library(ggridges)
 library(ggplot2)
 
 StackRMiletus %>%
-  transmute("thickness*10" = thickness * 10, 
-            "height*10" = height * 10,
-            width, min_DM, max_DM) %>%
+  transmute(
+    thickness_mm = thickness * 10,
+    height_mm = height * 10, 
+    width_cm = width, 
+    min_DM_cm = min_DM, 
+    max_DM_cm = max_DM) %>%
   melt() %>%
-  ggplot(aes(x = value, y = variable)) +
-  geom_density_ridges(aes(height = after_stat(density),
-                          fill = variable), 
-                      scale = 4, bw = "SJ",
-                      stat = "density", alpha = 0.8) +
+  ggplot(aes(x = value, y = variable, fill = variable)) + 
+  geom_density_ridges(scale = 4, bw = "SJ", alpha = 0.8) +
   scale_fill_manual(values = custom_palette(5)) +
-  theme(legend.position="none", panel.background = element_blank(), 
-        axis.title = element_blank())
+  theme(legend.position = "none", 
+        panel.background = element_blank(), 
+        axis.title = element_blank()) +
+  labs(title = "Numerical variables across all rings")
 ```
 
 
@@ -113,7 +122,9 @@ ggplot(StackRMiletus, aes(x = max_DM, y = min_DM,
   scale_x_continuous(breaks = seq(0, 20, 0.5)) +
   coord_fixed(ratio = 1, xlim = NULL, ylim = NULL, expand = TRUE) +
   theme(panel.background = element_blank(), 
-        panel.grid.major = element_line(colour = "grey", linewidth = 0.2, linetype = 2),
+        panel.grid.major = element_line(colour = "grey", 
+                                        linewidth = 0.2, 
+                                        linetype = 2),
         axis.text.x = element_text(angle = 45))
 ```
 
@@ -129,18 +140,18 @@ To generate samples based on the actual data, we need summary statistics first:
 
 ```{r record_summmary_statistics, echo = TRUE}
 datastructure <- data.frame(matrix(ncol = 5, nrow = 4))
-colnames(datastructure) <- c("height", "min diameter", "max diameter", 
+colnames(datastructure) <- c("height", "min_DM", "max_DM", 
                              "width", "thickness") 
 rownames(datastructure) <- c("range", "mean", "sd", "cv")
 
-numvar <- 8:12
-i = 1
-for (col in numvar) {
-  datastructure[1,i] <- range(StackRMiletus[, col])[2] - range(StackRMiletus[, col])[1]
-  datastructure[2,i] <- mean(StackRMiletus[, col])
-  datastructure[3,i] <- sd(StackRMiletus[, col])
-  datastructure[4,i] <- sd(StackRMiletus[, col]) / mean(StackRMiletus[, col]) * 100
-  i <- i + 1
+for (col in colnames(datastructure)) {
+  range <- range(StackRMiletus[, col])
+  sd <- sd(StackRMiletus[, col])
+  mean <- mean(StackRMiletus[, col])
+  datastructure["range", col] <- range[2] - range[1]
+  datastructure["mean", col] <- mean
+  datastructure["sd", col] <- sd
+  datastructure["cv", col] <- sd / mean * 100
 }
 ```
 
@@ -150,7 +161,8 @@ Which look like this:
 datastructure %>%
   kable("html", digits = 3) %>%
   kable_styling(font_size = 9, full_width = FALSE, position = "left", 
-                bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+                bootstrap_options = c("striped", "hover", 
+                                      "condensed", "responsive"))
 ```
 
 ## Testing for Structure Validity
@@ -159,7 +171,8 @@ Setup an empty dataframe to record the results of silhouette-tests:
 
 ```{r setup_for_comparison, echo = TRUE}
 tests_compare <- data.frame(matrix(ncol = 5, nrow = 1000))
-colnames(tests_compare) <- c("N", "n_cluster", "avg_sil_width", "avg_sil_width_without_0", "n_noise")
+colnames(tests_compare) <- c("N", "n_cluster", "avg_sil_width", 
+                             "avg_sil_width_without_0", "n_noise")
 ```
 
 
@@ -168,24 +181,24 @@ Based on the info from the summary statistics, the data.frame created above can 
 
 
 ```{r df_for_comparison, echo = TRUE}
-tests_dummy <- data.frame(matrix(ncol = 5, 
-                                 nrow = 3000))
-
-colnames(tests_dummy) <- colnames(tests_compare)
-
 library(cluster)
-
-for (row in 1:nrow(tests_dummy)) {
+tests_dummy <- lapply(seq_len(3000), function(x) {
   testsample <- data.frame(matrix(nrow = 67, 
                                   ncol = 2))
-  testsample[, 2] <- rnorm(n = 67, 
-                           mean = datastructure$`min diameter`[2], 
-                           sd = datastructure$`min diameter`[3])
-  testsample[, 1] <- rnorm(n = 67, 
-                           mean = datastructure$width[2], 
-                           sd = datastructure$width[3])
-  testsample[, 1] <- ((testsample[,1]*2) + testsample[,2])
   colnames(testsample) <- c("min_DM", "max_DM")
+  
+  testsample[, "min_DM"] <- rnorm(
+    n = 67, 
+    mean = datastructure$min_DM[2], 
+    sd = datastructure$min_DM[3]
+  )
+  width <- rnorm(
+    n = 67, 
+    mean = datastructure$width[2], 
+    sd = datastructure$width[3]
+  )
+  
+  testsample[, "max_DM"] <- (width * 2) + testsample[, "min_DM"]
   
   test_dist <- dist(testsample, method = "euclidean")
   test_hdbcluster <- hdbscan(testsample, minPts = 5)
@@ -193,20 +206,36 @@ for (row in 1:nrow(tests_dummy)) {
                             test_dist, 
                             do.clus.stat = T, 
                             do.n.k = T)
-  tests_dummy$N[row] <- nrow(testsample)
-  tests_dummy$n_cluster[row] <- length(unique(test_hdbcluster$cluster)) - 1
-  tests_dummy$n_noise[row] <- length(which(test_hdbcluster$cluster == 0))
-  if (tests_dummy$n_cluster[row] >= 1) {
+  
+  x <- list(
+    N = nrow(testsample),
+    n_cluster = length(unique(test_hdbcluster$cluster)) - 1,
+    n_noise = length(which(test_hdbcluster$cluster == 0)),
+    avg_sil_width = NA,
+    avg_sil_width_without_0 = NA
+  )
+  
+  if (x$n_cluster >= 1) {
     mat <- as.data.frame(sil_hdbscan[1:67, 1:3])
-    tests_dummy$avg_sil_width[row] <- mean(mat$sil_width)
+    x$avg_sil_width <- mean(mat$sil_width)
+    
     mat <- mat[-which(mat$cluster == 0), ]
-    tests_dummy$avg_sil_width_without_0[row] <- mean(mat$sil_width)
+    x$avg_sil_width_without_0 <- mean(mat$sil_width)
+  } 
+  
+  if (any(is.na(x))) {
+    return(NA)
+  } else {
+    return(x)
   }
-}
-tests_dummy <- na.omit(tests_dummy)
-tests_compare <- tests_dummy[sample(c(1:nrow(tests_dummy)), 
+})  
+
+tests_dummy <- tests_dummy[!is.na(tests_dummy)]
+
+tests_compare <- tests_dummy[sample(seq_along(tests_dummy), 
                                     replace = FALSE, 
-                                    size = nrow(tests_compare)), ]
+                                    size = nrow(tests_compare))]
+tests_compare <- bind_rows(tests_compare)
 ```
 
 
@@ -261,32 +290,44 @@ And can then be compared to the distribution of respective values from the gener
 
 ```{r density_plot_compare_testsamples, echo = FALSE, warning = FALSE, message=FALSE}
 p1 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = n_cluster, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = n_cluster, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Number of clusters") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) +
-  geom_vline(xintercept = miletus_data_sil$n_cluster, col = "red")
+  geom_vline(xintercept = miletus_data_sil$n_cluster, 
+             col = "red")
 
 p2 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = n_noise, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = n_noise, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Number of points in noise-cluster") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) +
-  geom_vline(xintercept = miletus_data_sil$n_noise, col = "red")
+  geom_vline(xintercept = miletus_data_sil$n_noise, 
+             col = "red")
 
 p3 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = avg_sil_width, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = avg_sil_width, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Average Silhouette width including noise-cluster") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) + xlim(0, 1) +
-  geom_vline(xintercept = miletus_data_sil$avg_sil_width, col = "red")
+  geom_vline(xintercept = miletus_data_sil$avg_sil_width, 
+             col = "red")
 
 p4 <- ggplot(data = tests_compare) +
-  geom_density(aes(x = avg_sil_width_without_0, y = after_stat(density)), fill = 'grey') +
+  geom_density(aes(x = avg_sil_width_without_0, 
+                   y = after_stat(density)), 
+               fill = 'grey') +
   labs(title = "Average Silhouette width without noise-cluster") +
   theme(panel.background = element_blank(),
         panel.grid = element_blank()) + xlim(0, 1) +
-  geom_vline(xintercept = miletus_data_sil$avg_sil_width_without_0, col = "red")
+  geom_vline(xintercept = miletus_data_sil$avg_sil_width_without_0, 
+             col = "red")
 
 library(gridExtra)
 grid.arrange(p1, p2, p3, p4, 
