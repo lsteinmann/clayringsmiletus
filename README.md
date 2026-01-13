@@ -2,6 +2,7 @@
 [![R-CMD-check](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/lsteinmann/clayringsmiletus/actions/workflows/R-CMD-check.yaml)
 [![CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](http://creativecommons.org/licenses/by/4.0/)
 [![CRAN status](https://www.r-pkg.org/badges/version/clayringsmiletus)](https://CRAN.R-project.org/package=clayringsmiletus)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4288951.svg)](https://doi.org/10.5281/zenodo.4288951)
 <!-- badges: end -->
 
 

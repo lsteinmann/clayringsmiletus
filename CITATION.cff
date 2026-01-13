@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: If you use this dataset, please cite it using the metadata from this file.
+title: "Stacking Rings from Miletus"
+version: v1.0.1
+authors:
+  - family-names: Steinmann
+    given-names: Lisa
+    orcid: https://orcid.org/0000-0002-2215-1243
+version: 1.0.1
+license:
+- cc-by-4.0
+type: dataset
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.4288951
+doi: 10.5281/zenodo.10156187
+date-released: '2023-11-19'
+keywords:
+  - archaeology
